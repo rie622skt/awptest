@@ -1,7 +1,7 @@
 // キャッシュファイルの指定
 var CACHE_NAME = 'temperature-converter-v1';
 var urlsToCache = [
-    '/poster-keisuke.github.io/',
+    '/rie622skt.github.io/',
 ];
 
 // インストール処理
@@ -17,11 +17,19 @@ self.addEventListener('install', function(event) {
 
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener('fetch', function(event) {
-    event.respondWith(
-        caches
-            .match(event.request)
-            .then(function(response) {
-                return response ? response : fetch(event.request);
-            })
-    );
-});
+    event.respondWith(async function() {
+       try {
+         if (event.request.url.startsWith('http')) {
+           var res = await fetch(event.request);
+           var cache = await caches.open(CACHE_NAME);
+           cache.put(event.request.url, res.clone());
+           return res;
+         }
+         return fetch(event.request);
+       }
+       catch (error) {
+         console.log('Using cache');
+         return caches.match(event.request);
+       }
+     }());
+ });
