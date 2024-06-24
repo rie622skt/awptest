@@ -26,6 +26,9 @@
             </select>
             <output name="output-temp" id="output-temp" for="input-temp input-unit output-unit">68 F</output>
         </form> 
+        <button id="InstallBtn" style="display:none">
+            アプリをインストールする
+        </button>
         <script src="converter.js"></script>
         <script>
             if('serviceWorker' in navigator) {
@@ -39,8 +42,5 @@
             }
             
         </script>
-        <button id="InstallBtn" style="display:none">
-            アプリをインストールする
-        </button>
      </body>
 </html>
